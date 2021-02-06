@@ -1,0 +1,8 @@
+.vscode
+node_modules
+
+prisma/devices.db
+
+dist
+
+prisma/migrations

@@ -1,0 +1,54 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./devices.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id Int @default(autoincrement()) @id
+  firstName String
+  lastName String
+  projects UsersOnProjects[]
+  disabled Boolean @default(false)
+  created DateTime @default(now())
+  last_updated DateTime @default(now())
+}
+
+model Project {
+  id Int @default(autoincrement()) @id
+  title String @unique
+  parent Project? @relation(fields: [parentId], references: [id])
+  parentId Int?
+  users UsersOnProjects[]
+  devices Device[]
+  beginDate DateTime
+  expirationDate DateTime?
+  deleted Boolean @default(false)
+  created DateTime @default(now())
+  lastUpdated DateTime @default(now())
+}
+
+model UsersOnProjects {
+  user User @relation(fields: [userId], references: [id])
+  userId Int
+  project Project @relation(fields: [projectId], references: [id])
+  projectId Int
+  created DateTime @default(now())
+
+  @@id([userId, projectId])
+}
+
+model Device {
+  deviceId Int @default(autoincrement()) @id
+  project Project @relation(fields: [projectId], references: [id])
+  projectId Int
+  serialNumber String
+  created DateTime @default(now())
+  lastUpdated DateTime @default(now())
+}
