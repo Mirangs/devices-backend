@@ -7,4 +7,6 @@ COPY ./package.json ./package.json
 
 RUN yarn
 
+RUN yarn run init
+
 CMD [ "yarn", "dev" ]
