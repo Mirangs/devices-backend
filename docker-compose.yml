@@ -1,0 +1,11 @@
+version: '3.7'
+
+services:
+  backend:
+    build: .
+    image: devices-backend:1.0.0
+    container_name: devices-backend-api
+    ports:
+      - '3001:3001'
+    volumes:
+      - ./prisma/devices.db:/usr/app/prisma/devices.db
